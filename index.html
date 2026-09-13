@@ -912,6 +912,16 @@
             </div>
             <div class="stat">
               <div class="stat-head">
+                Future prospect
+                <i class="stat-icon"
+                  ><svg viewBox="0 0 24 24"><path d="M12 2v2m0 16v2m9-9h-2M5 12H3m18.364 6.364l-2.828-2.828M6.343 6.343l-2.828-2.828" /></svg
+                ></i>
+              </div>
+              <div class="stat-value" id="statFutureProspect">—</div>
+              <div class="stat-sub">Potential future clients</div>
+            </div>
+            <div class="stat">
+              <div class="stat-head">
                 Closed
                 <i class="stat-icon"
                   ><svg viewBox="0 0 24 24"><path d="M20 7 10 17l-5-5" /></svg
@@ -1276,9 +1286,14 @@
         }
       }
       function normalizeStatus(s) {
-        return ["new", "contacted", "interested", "closed", "lost"].includes(
-          String(s).toLowerCase(),
-        )
+        return [
+          "new",
+          "contacted",
+          "interested",
+          "future prospect",
+          "closed",
+          "lost",
+        ].includes(String(s).toLowerCase())
           ? String(s).toLowerCase()
           : "new";
       }
@@ -1320,7 +1335,9 @@
           statTotal: server?.total ?? server?.total_businesses ?? list.length,
           statNew: server?.new ?? count("new"),
           statInterested: server?.interested ?? count("interested"),
+          statFutureProspect: server?.future_prospect ?? count("future prospect"),
           statClosed: server?.closed ?? count("closed"),
+          statLost: server?.lost ?? count("lost"),
         };
         Object.entries(map).forEach(([id, v]) => {
           $("#" + id).textContent = v ?? 0;
